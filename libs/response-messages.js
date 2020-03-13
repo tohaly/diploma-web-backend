@@ -6,5 +6,8 @@ module.exports = {
     url: '— не правильным форматом для url-адреса',
     email: '— не прафильный формат для email-адреса',
     toShortPassword: 'Минимальная длинна пароля 8 символов'
+  },
+  clientErrors: {
+    mailAlreadyExists: 'Такой Email уже существует'
   }
 };

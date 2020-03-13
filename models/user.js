@@ -1,34 +1,35 @@
-const mongoose = require('mongose');
+const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const errMessages = require('../libs/response-messages');
+const responseMessages = require('../libs/response-messages');
 const RequestWrong = require('../errors/request-wrong');
+const getResponse = require('../libs/helpers');
 
-const UserSchema = new mongose.Schema({
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: [true, errMessages.validation.requiredField],
+    required: [true, responseMessages.validation.requiredField],
     unique: true,
     validate: {
       validator(valid) {
         return validator.isEmail(valid);
       },
-      message: props => `${props.value} ${errMessages.validation.email}`
+      message: props => `${props.value} ${responseMessages.validation.email}`
     }
   },
   password: {
     type: String,
-    required: [true, errMessages.validation.requiredField],
-    minlenght: [8, errMessages.validation.toShortPassword],
+    required: [true, responseMessages.validation.requiredField],
+    minlenght: [8, responseMessages.validation.toShortPassword],
     select: false
   },
   name: {
     type: String,
-    required: [true, errMessages.validation.requiredField],
-    minlength: [2, errMessages.validation.toShort],
-    maxlength: [30, errMessages.validation.toLong]
+    required: [true, responseMessages.validation.requiredField],
+    minlength: [2, responseMessages.validation.toShort],
+    maxlength: [30, responseMessages.validation.toLong]
   }
 });
 
@@ -60,7 +61,7 @@ UserSchema.statics.updatePassword = function(user, res) {
     if (err) {
       return Promise.reject(err);
     }
-    return this.findByIdAndUpdate(user._id, { password: hash }, updateOptions).then(updatingUser =>
+    return this.findByIdAndUpdate(user._id, { password: hash }).then(updatingUser =>
       getResponse(res, updatingUser)
     );
   });
