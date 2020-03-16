@@ -4,7 +4,7 @@ const { getResponse } = require('../libs/helpers');
 const responseMessages = require('../libs/response-messages');
 
 module.exports.getArticles = (req, res, next) => {
-  Articles.find({})
+  Articles.find({ owner: req.user._id })
     .then(articles => {
       getResponse(res, articles);
     })
@@ -22,6 +22,6 @@ module.exports.createArticle = (req, res, next) => {
 
 module.exports.deleteArticle = (req, res, next) => {
   Articles.findByIdAndDelete(req.params.articleId)
-    .then(res.status(200).send({ message: responseMessages.success.removeCard }))
+    .then(res.status(200).send({ message: responseMessages.success.removeArticle }))
     .catch(next);
 };

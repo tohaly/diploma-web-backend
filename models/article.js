@@ -57,4 +57,4 @@ const ArticleSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('card', ArticleSchema);
+module.exports = mongoose.model('article', ArticleSchema);

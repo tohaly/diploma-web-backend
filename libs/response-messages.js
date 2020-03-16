@@ -1,6 +1,6 @@
 module.exports = {
   success: {
-    removeCard: 'Пост успешно удален!'
+    removeArticle: 'Пост успешно удален!'
   },
   validation: {
     requiredField: 'Обязательное поле для заполнения',
