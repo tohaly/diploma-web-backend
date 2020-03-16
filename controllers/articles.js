@@ -21,7 +21,7 @@ module.exports.createArticle = (req, res, next) => {
 };
 
 module.exports.deleteArticle = (req, res, next) => {
-  Articles.findByIdAndDelete(req.param.articleId)
+  Articles.findByIdAndDelete(req.params.articleId)
     .then(res.status(200).send({ message: responseMessages.success.removeCard }))
     .catch(next);
 };

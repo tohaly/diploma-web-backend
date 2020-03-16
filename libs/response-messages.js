@@ -11,6 +11,7 @@ module.exports = {
     mailAlreadyExists: 'Такой Email уже существует',
     authorization: 'Требуется авторизация',
     authentication: 'Неправильные почта или пароль',
+    articleNotFound: 'Статья не найдена',
     resourceNotFound: 'Запрашиваемый ресурс не найден'
   },
   success: {
