@@ -17,6 +17,7 @@ module.exports = {
     articleNotFound: 'Статья не найдена',
     badId: 'Не правильный формат id',
     validation: 'Ошибка валидации',
+    forbidden: 'Недостаточно прав для совершения данного действия',
     resourceNotFound: 'Запрашиваемый ресурс не найден'
   },
   serverErrors: {

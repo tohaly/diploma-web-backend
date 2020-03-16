@@ -3,6 +3,7 @@ require('dotenv-flow').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 
 const auth = require('./middlewares/auth');
 const users = require('./routers/users');
@@ -10,6 +11,7 @@ const areticles = require('./routers/articles');
 const { notFoundRes } = require('./middlewares/not-found-res');
 const { creteUser, login } = require('./controllers/users');
 const errorHandler = require('./errors/error-handler');
+const { validateCreateUser, validateLogin } = require('./middlewares/request-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT, MONGO_HOST } = process.env;
@@ -37,8 +39,8 @@ mongoose
 
 app.use(requestLogger);
 
-app.use('/signin', login);
-app.use('/signup', creteUser);
+app.post('/signin', validateLogin, login);
+app.post('/signup', validateCreateUser, creteUser);
 
 app.use('/', auth);
 
