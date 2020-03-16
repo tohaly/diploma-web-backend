@@ -1,7 +1,7 @@
+/* eslint no-unused-vars: 0   */
 const translateErrors = require('./translate-errors');
 
-// eslint-disable-next-line no-unused-vars
-module.exports = (err, req, res, next) => {
+module.exports = (err, _req, res, next) => {
   if (!err.statusCode) {
     return translateErrors(err, res);
   }

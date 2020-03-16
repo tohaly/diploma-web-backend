@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint no-console: 0   */
 require('dotenv-flow').config();
 const express = require('express');
 const mongoose = require('mongoose');
