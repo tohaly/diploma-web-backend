@@ -10,6 +10,7 @@ module.exports = {
   clientErrors: {
     mailAlreadyExists: 'Такой Email уже существует',
     authorization: 'Требуется авторизация',
+    authentication: 'Неправильные почта или пароль',
     resourceNotFound: 'Запрашиваемый ресурс не найден'
   },
   success: {
