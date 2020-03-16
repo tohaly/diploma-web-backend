@@ -5,33 +5,38 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const responseMessages = require('../libs/response-messages');
 const RequestWrong = require('../errors/request-wrong');
-const getResponse = require('../libs/helpers');
+const { getResponse } = require('../libs/helpers');
 
-const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, responseMessages.validation.requiredField],
-    unique: true,
-    validate: {
-      validator(valid) {
-        return validator.isEmail(valid);
-      },
-      message: props => `${props.value} ${responseMessages.validation.email}`
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, responseMessages.validation.requiredField],
+      unique: true,
+      validate: {
+        validator(valid) {
+          return validator.isEmail(valid);
+        },
+        message: props => `${props.value} ${responseMessages.validation.email}`
+      }
+    },
+    password: {
+      type: String,
+      required: [true, responseMessages.validation.requiredField],
+      minlenght: [8, responseMessages.validation.toShortPassword],
+      select: false
+    },
+    name: {
+      type: String,
+      required: [true, responseMessages.validation.requiredField],
+      minlength: [2, responseMessages.validation.toShort],
+      maxlength: [30, responseMessages.validation.toLong]
     }
   },
-  password: {
-    type: String,
-    required: [true, responseMessages.validation.requiredField],
-    minlenght: [8, responseMessages.validation.toShortPassword],
-    select: false
-  },
-  name: {
-    type: String,
-    required: [true, responseMessages.validation.requiredField],
-    minlength: [2, responseMessages.validation.toShort],
-    maxlength: [30, responseMessages.validation.toLong]
+  {
+    versionKey: false
   }
-});
+);
 
 UserSchema.plugin(
   uniqueValidator,
@@ -61,9 +66,15 @@ UserSchema.statics.updatePassword = function(user, res) {
     if (err) {
       return Promise.reject(err);
     }
-    return this.findByIdAndUpdate(user._id, { password: hash }).then(updatingUser =>
-      getResponse(res, updatingUser)
-    );
+    return this.findByIdAndUpdate(
+      user._id,
+      { password: hash },
+      {
+        new: true,
+        runValidators: true,
+        upsert: true
+      }
+    ).then(updatingUser => getResponse(res, updatingUser));
   });
 };
 
