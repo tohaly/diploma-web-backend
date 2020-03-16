@@ -1,4 +1,7 @@
 module.exports = {
+  success: {
+    removeCard: 'Пост успешно удален!'
+  },
   validation: {
     requiredField: 'Обязательное поле для заполнения',
     toShort: 'Минимальное количество символов 2',
@@ -12,9 +15,11 @@ module.exports = {
     authorization: 'Требуется авторизация',
     authentication: 'Неправильные почта или пароль',
     articleNotFound: 'Статья не найдена',
+    badId: 'Не правильный формат id',
+    validation: 'Ошибка валидации',
     resourceNotFound: 'Запрашиваемый ресурс не найден'
   },
-  success: {
-    removeCard: 'Пост успешно удален!'
+  serverErrors: {
+    internalServerError: 'Произошла ошибка сервера:'
   }
 };

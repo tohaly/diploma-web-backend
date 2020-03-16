@@ -9,6 +9,7 @@ const users = require('./routers/users');
 const areticles = require('./routers/articles');
 const { notFoundRes } = require('./middlewares/not-found-res');
 const { creteUser, login } = require('./controllers/users');
+const errorHandler = require('./errors/error-handler');
 
 const { PORT, MONGO_HOST } = process.env;
 
@@ -42,6 +43,8 @@ app.use('/users', users);
 app.use('/articles', areticles);
 
 app.use('/', notFoundRes);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log('\x1b[32m%s\x1b[0m', `Сервер запущен 👌, порт: ${PORT}.`);
