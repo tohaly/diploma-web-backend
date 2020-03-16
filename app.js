@@ -10,6 +10,7 @@ const areticles = require('./routers/articles');
 const { notFoundRes } = require('./middlewares/not-found-res');
 const { creteUser, login } = require('./controllers/users');
 const errorHandler = require('./errors/error-handler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT, MONGO_HOST } = process.env;
 
@@ -34,6 +35,8 @@ mongoose
     console.log(`\x1b[31m%s\x1b[0m`, `------------`);
   });
 
+app.use(requestLogger);
+
 app.use('/signin', login);
 app.use('/signup', creteUser);
 
@@ -43,6 +46,8 @@ app.use('/users', users);
 app.use('/articles', areticles);
 
 app.use('/', notFoundRes);
+
+app.use(errorLogger);
 
 app.use(errorHandler);
 
