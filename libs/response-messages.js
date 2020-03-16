@@ -8,6 +8,11 @@ module.exports = {
     toShortPassword: 'Минимальная длинна пароля 8 символов'
   },
   clientErrors: {
-    mailAlreadyExists: 'Такой Email уже существует'
+    mailAlreadyExists: 'Такой Email уже существует',
+    authorization: 'Требуется авторизация',
+    resourceNotFound: 'Запрашиваемый ресурс не найден'
+  },
+  success: {
+    removeCard: 'Пост успешно удален!'
   }
 };
