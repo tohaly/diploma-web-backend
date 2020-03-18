@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const responseMessages = require('../libs/response-messages');
+const { AUTHORIZATION } = require('../config/constants/response-messages/client-errors');
 const { ForbiddenError } = require('../errors');
 
 const { JWT_SECRET } = process.env;
@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    throw new ForbiddenError(responseMessages.clientErrors.authorization);
+    throw new ForbiddenError(AUTHORIZATION);
   }
 
   const token = authorization.replace('Bearer ', '');
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    throw new ForbiddenError(responseMessages.clientErrors.authorization);
+    throw new ForbiddenError(AUTHORIZATION);
   }
 
   req.user = payload;

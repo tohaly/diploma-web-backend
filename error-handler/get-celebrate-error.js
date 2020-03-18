@@ -1,7 +1,5 @@
-const responseMessages = require('../libs/response-messages');
+const { VALIDATION } = require('../config/constants/response-messages/client-errors');
 
 module.exports = (err, res) => {
-  return res
-    .status(400)
-    .send({ message: `${responseMessages.clientErrors.validation}: ${err.message}` });
+  return res.status(400).send({ message: `${VALIDATION}: ${err.message}` });
 };

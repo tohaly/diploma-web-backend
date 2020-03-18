@@ -1,6 +1,6 @@
-const responseMessages = require('../libs/response-messages');
+const { RESOURCE_NOT_FOUND } = require('../config/constants/response-messages/client-errors');
 const { NotFoundError } = require('../errors');
 
 module.exports.notFoundRes = () => {
-  throw new NotFoundError(responseMessages.clientErrors.resourceNotFound);
+  throw new NotFoundError(RESOURCE_NOT_FOUND);
 };

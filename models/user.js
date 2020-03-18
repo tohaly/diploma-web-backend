@@ -4,7 +4,15 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const responseMessages = require('../libs/response-messages');
+const {
+  REQUIRED_FIELD,
+  IS_EMAIL_VALID,
+  MAIL_ALREADY_EXISTS,
+  TO_SHORT_PASSWORD,
+  TO_SHORT,
+  TO_LONG
+} = require('../config/constants/response-messages/validation-errors');
+const { AUTHENTICATION } = require('../config/constants/response-messages/client-errors');
 const { RequestWrong } = require('../errors');
 const { getResponse } = require('../libs/helpers');
 
@@ -12,26 +20,26 @@ const UserSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: [true, responseMessages.validation.requiredField],
+      required: [true, REQUIRED_FIELD],
       unique: true,
       validate: {
         validator(valid) {
           return validator.isEmail(valid);
         },
-        message: props => `${props.value} ${responseMessages.validation.email}`
+        message: props => `${props.value} ${IS_EMAIL_VALID}`
       }
     },
     password: {
       type: String,
-      required: [true, responseMessages.validation.requiredField],
-      minlenght: [8, responseMessages.validation.toShortPassword],
+      required: [true, REQUIRED_FIELD],
+      minlenght: [8, TO_SHORT_PASSWORD],
       select: false
     },
     name: {
       type: String,
-      required: [true, responseMessages.validation.requiredField],
-      minlength: [2, responseMessages.validation.toShort],
-      maxlength: [30, responseMessages.validation.toLong]
+      required: [true, REQUIRED_FIELD],
+      minlength: [2, TO_SHORT],
+      maxlength: [30, TO_LONG]
     }
   },
   {
@@ -39,21 +47,18 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.plugin(
-  uniqueValidator,
-  new RequestWrong(responseMessages.clientErrors.mailAlreadyExists)
-);
+UserSchema.plugin(uniqueValidator, new RequestWrong(MAIL_ALREADY_EXISTS));
 
 UserSchema.statics.findUserByCredentials = function(email, password) {
   return this.findOne({ email })
     .select('+password')
     .then(user => {
       if (!user) {
-        return Promise.reject(new RequestWrong(responseMessages.clientErrors.authentication));
+        return Promise.reject(new RequestWrong(AUTHENTICATION));
       }
       return bcrypt.compare(password, user.password).then(matched => {
         if (!matched) {
-          return Promise.reject(new RequestWrong(responseMessages.clientErrors.authentication));
+          return Promise.reject(new RequestWrong(AUTHENTICATION));
         }
         return user;
       });

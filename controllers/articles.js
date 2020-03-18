@@ -1,7 +1,7 @@
 const Articles = require('../models/article');
 
 const { getResponse } = require('../libs/helpers');
-const responseMessages = require('../libs/response-messages');
+const { REMOVE_ARTICLE } = require('../config/constants/response-messages/success');
 
 module.exports.getArticles = (req, res, next) => {
   Articles.find({ owner: req.user._id })
@@ -22,6 +22,6 @@ module.exports.createArticle = (req, res, next) => {
 
 module.exports.deleteArticle = (req, res, next) => {
   Articles.findByIdAndDelete(req.params.articleId)
-    .then(res.status(200).send({ message: responseMessages.success.removeArticle }))
+    .then(res.status(200).send({ message: REMOVE_ARTICLE }))
     .catch(next);
 };

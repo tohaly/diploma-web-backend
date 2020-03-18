@@ -1,5 +1,5 @@
 const Article = require('../models/article');
-const responseMessages = require('../libs/response-messages');
+const { FORBIDDEN } = require('../config/constants/response-messages/client-errors');
 const { RequestWrong } = require('../errors');
 
 module.exports.doesArticleBelongUser = (req, res, next) => {
@@ -7,7 +7,7 @@ module.exports.doesArticleBelongUser = (req, res, next) => {
     .select('+owner')
     .then(article => {
       if (req.user._id !== String(article.owner)) {
-        throw new RequestWrong(responseMessages.clientErrors.forbidden);
+        throw new RequestWrong(FORBIDDEN);
       }
       next();
     })
