@@ -2,6 +2,7 @@ require('dotenv-flow').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 
 const dbStatusMessages = require('./config/db-status-messages');
 const serverStatusMessage = require('./config/server-status-message');
@@ -15,6 +16,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT, MONGO_HOST } = process.env;
 
 const app = express();
+
+app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
