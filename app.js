@@ -5,9 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const auth = require('./middlewares/auth');
-const users = require('./routers/users');
-const areticles = require('./routers/articles');
-const { notFoundRes } = require('./middlewares/not-found-res');
+const router = require('./routers');
 const { creteUser, login } = require('./controllers/users');
 const errorHandler = require('./errors/error-handler');
 const { validateCreateUser, validateLogin } = require('./middlewares/request-validation');
@@ -43,10 +41,7 @@ app.post('/signup', validateCreateUser, creteUser);
 
 app.use('/', auth);
 
-app.use('/users', users);
-app.use('/articles', areticles);
-
-app.use('/', notFoundRes);
+app.use(router);
 
 app.use(errorLogger);
 
