@@ -4,12 +4,14 @@
   "description": "The server part of the web developer diploma in Yandex.Practicum",
   "main": "app.js",
   "scripts": {
+    "pmStart": "cross-env NODE_ENV=production pm2 start app.js",
+    "pmRestart": "cross-env NODE_ENV=production pm2 restart app",
     "start": "cross-env NODE_ENV=production node app.js",
     "dev": "cross-env NODE_ENV=development nodemon app.js",
     "eslint": "eslint --ext=.js ./ --ignore-path .gitignore",
     "eslintFix": "eslint --ext=.js ./ --ignore-path .gitignore --fix",
     "inspect": "cross-env NODE_ENV=development node --inspect app.js",
-    "deployEnv": "scp -r .env tohalb@84.201.161.219:/home/tohalb/diploma-web-backend"
+    "deployEnv": "scp .env tohalb@84.201.136.54:/home/tohalb/diploma-web-backend"
   },
   "repository": {
     "type": "git",
