@@ -13,6 +13,7 @@ const { creteUser, login } = require('./controllers/users');
 const errorHandler = require('./error-handler');
 const { validateCreateUser, validateLogin } = require('./modules/celebrate-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./modules/reate-limiter-confg');
 
 const { PORT, MONGO_HOST } = process.env;
 
@@ -39,6 +40,8 @@ mongoose
   });
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, creteUser);
