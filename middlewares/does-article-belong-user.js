@@ -1,6 +1,6 @@
 const Article = require('../models/article');
 const responseMessages = require('../libs/response-messages');
-const RequestWrong = require('../errors/request-wrong');
+const { RequestWrong } = require('../errors');
 
 module.exports.doesArticleBelongUser = (req, res, next) => {
   Article.findById(req.params.articleId)

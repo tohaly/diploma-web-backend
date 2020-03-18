@@ -1,6 +1,6 @@
 const Article = require('../models/article');
 const responseMessages = require('../libs/response-messages');
-const NotFoundError = require('../errors/not-found-error');
+const { NotFoundError } = require('../errors');
 
 module.exports.doesArticleExist = (req, res, next) => {
   Article.findById(req.params.articleId)

@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const auth = require('./middlewares/auth');
 const router = require('./routers');
 const { creteUser, login } = require('./controllers/users');
-const errorHandler = require('./errors/error-handler');
+const errorHandler = require('./error-handler');
 const { validateCreateUser, validateLogin } = require('./middlewares/request-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 

@@ -1,10 +1,11 @@
+/* eslint  func-names: 0 */
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const responseMessages = require('../libs/response-messages');
-const RequestWrong = require('../errors/request-wrong');
+const { RequestWrong } = require('../errors');
 const { getResponse } = require('../libs/helpers');
 
 const UserSchema = new mongoose.Schema(
@@ -43,7 +44,6 @@ UserSchema.plugin(
   new RequestWrong(responseMessages.clientErrors.mailAlreadyExists)
 );
 
-// eslint-disable-next-line func-names
 UserSchema.statics.findUserByCredentials = function(email, password) {
   return this.findOne({ email })
     .select('+password')
@@ -60,7 +60,6 @@ UserSchema.statics.findUserByCredentials = function(email, password) {
     });
 };
 
-// eslint-disable-next-line func-names
 UserSchema.statics.updatePassword = function(user, res) {
   bcrypt.hash(user.password, 10, (err, hash) => {
     if (err) {

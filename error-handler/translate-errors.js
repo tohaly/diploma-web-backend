@@ -1,5 +1,5 @@
 const responseMessages = require('../libs/response-messages');
-const RequestWrong = require('../errors/request-wrong');
+const { RequestWrong } = require('../errors');
 
 module.exports = (err, res) => {
   let customError;
