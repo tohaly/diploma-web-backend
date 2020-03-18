@@ -5,13 +5,10 @@ const { ForbiddenError } = require('../errors');
 const { JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
-  const { authorization } = req.headers;
-
-  if (!authorization || !authorization.startsWith('Bearer ')) {
+  const token = req.cookies.jwt;
+  if (!req.cookies.jwt) {
     throw new ForbiddenError(AUTHORIZATION);
   }
-
-  const token = authorization.replace('Bearer ', '');
 
   let payload;
 

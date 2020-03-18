@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 
 const dbStatusMessages = require('./config/db-status-messages');
 const serverStatusMessage = require('./config/server-status-message');
@@ -21,6 +22,7 @@ app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 mongoose
   .connect(MONGO_HOST, {
