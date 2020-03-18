@@ -78,7 +78,7 @@ UserSchema.statics.updatePassword = function(user, res) {
         runValidators: true,
         upsert: true
       }
-    ).then(updatingUser => getResponse(res, updatingUser));
+    ).then(updatingUser => getResponse(res, updatingUser, 201));
   });
 };
 
