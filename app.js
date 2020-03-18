@@ -3,7 +3,6 @@ require('dotenv-flow').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { errors } = require('celebrate');
 
 const auth = require('./middlewares/auth');
 const users = require('./routers/users');
