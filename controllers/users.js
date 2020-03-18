@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const { getResponse } = require('../libs/helpers');
+const { AUTHORIZATION } = require('../config/constants/response-messages/success');
 
 const { JWT_SECRET } = process.env;
 
@@ -27,6 +28,7 @@ module.exports.login = (req, res, next) => {
         })
         .end();
     })
+    .then(res.status(200).send({ message: AUTHORIZATION }))
     .catch(next);
 };
 
