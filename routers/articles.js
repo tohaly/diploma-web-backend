@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { getArticles, createArticle, deleteArticle } = require('../controllers/articles');
 const { doesArticleExist } = require('../middlewares/is-article-exist');
 const { doesArticleBelongUser } = require('../middlewares/does-article-belong-user');
-const { validateCreateArticle } = require('../middlewares/request-validation');
+const { validateCreateArticle } = require('../modules/celebrate-validation');
 
 router.get('/', getArticles);
 router.post('/', validateCreateArticle, createArticle);

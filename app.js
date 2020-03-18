@@ -8,7 +8,7 @@ const auth = require('./middlewares/auth');
 const router = require('./routers');
 const { creteUser, login } = require('./controllers/users');
 const errorHandler = require('./error-handler');
-const { validateCreateUser, validateLogin } = require('./middlewares/request-validation');
+const { validateCreateUser, validateLogin } = require('./modules/celebrate-validation');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT, MONGO_HOST } = process.env;

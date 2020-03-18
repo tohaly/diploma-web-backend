@@ -1,5 +1,5 @@
 const { celebrate, Joi } = require('celebrate');
-const { joiFiledsOptions, joiObjectsOptions } = require('../libs/joi-options');
+const { joiFiledsOptions, joiObjectsOptions } = require('./joi-options');
 
 const validateCreateUser = celebrate({
   body: Joi.object()
