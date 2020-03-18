@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, REQUIRED_FIELD],
-      minlenght: [8, TO_SHORT_PASSWORD],
+      minlength: [8, TO_SHORT_PASSWORD],
       select: false
     },
     name: {

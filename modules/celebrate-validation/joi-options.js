@@ -8,7 +8,7 @@ module.exports.joiFiledsOptions = {
     .max(30)
     .messages({
       'string.base': joiMessages.string,
-      'string.empty': joiMessages.emptry,
+      'string.empty': joiMessages.empty,
       'string.min': joiMessages.toShort,
       'string.max': joiMessages.toLong,
       'any.required': joiMessages.requiredField
@@ -26,7 +26,7 @@ module.exports.joiFiledsOptions = {
     .min(8)
     .messages({
       'string.base': joiMessages.string,
-      'string.empty': joiMessages.emptry,
+      'string.empty': joiMessages.empty,
       'string.min': joiMessages.toShort,
       'any.required': joiMessages.requiredField
     }),
@@ -36,7 +36,7 @@ module.exports.joiFiledsOptions = {
     .email()
     .messages({
       'string.base': joiMessages.string,
-      'string.empty': joiMessages.emptry,
+      'string.empty': joiMessages.empty,
       'any.required': joiMessages.requiredField,
       'string.email': joiMessages.email
     }),
@@ -44,7 +44,7 @@ module.exports.joiFiledsOptions = {
     .required()
     .messages({
       'string.base': joiMessages.string,
-      'string.empty': joiMessages.emptry,
+      'string.empty': joiMessages.empty,
       'any.required': joiMessages.requiredField
     })
 };

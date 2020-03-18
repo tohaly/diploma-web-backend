@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const users = require('./users');
-const areticles = require('./articles');
+const articles = require('./articles');
 const { notFoundRes } = require('../middlewares/not-found-res');
 
 router.use('/users', users);
-router.use('/articles', areticles);
+router.use('/articles', articles);
 
 router.use('/', notFoundRes);
 
