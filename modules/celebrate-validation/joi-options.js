@@ -1,7 +1,7 @@
 const { Joi } = require('celebrate');
 const joiMessages = require('./joi-messages');
 
-module.exports.joiFiledsOptions = {
+module.exports.joiFieldsOptions = {
   name: Joi.string()
     .required()
     .min(2)
