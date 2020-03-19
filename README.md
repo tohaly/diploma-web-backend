@@ -1,4 +1,4 @@
-# Сервер для проекта "Проект"
+# Сервер "Diploma-web"
 
 Version: v.0.0.1
 
@@ -12,15 +12,15 @@ Version: v.0.0.1
 
 #### Бэкэнд
 
-https://api.mesto-spa.ml/
+https://api.diploma-web.ml/
 
-https://www.api.mesto-spa.ml/
+https://www.api.diploma-web.ml/
 
 #### Фронтенд
 
-https://mesto-spa.ml/
+https://diploma-web.ml/
 
-https://www.mesto-spa.ml/
+https://www.diploma-web.ml/
 
 ## Используемые технологии:
 
@@ -50,7 +50,7 @@ JS, GIT, Eslint, Node.js, express.js.
 
 ### `/signup`
 
-- Описание: Создания пользователя на сервере.
+- Описание: Создание пользователя на сервере.
 - Метод: `POST`;
 - Headers:
 
@@ -61,34 +61,28 @@ Content-Type: application/json
 - Параметры:
 
 ```
-name: имя пользователя, string;
-about - информация о пользователе, string;
-avatar - ссылка на аватар пользователя, string;
 email - почта для регистрации, string;
-password - пароль, string.
+password - пароль, string;
+name: имя пользователя, string.
 ```
 
 - Пример тела запроса:
 
 ```
 {
-  "name": "Рагнар Лодброк",
-  "about": "Король",
-  "avatar": "avatar.com/ragnar.jpg",
-  "email": "ragnar@gmail.com"
-  "password": "p2As&dww0rd"
+  "email": "admin@gmail.com"
+  "password": "p2As&dww0rd",
+  "name": "Admin"
 }
 ```
 
-- Пример ответа:
+- Пример тела ответа:
 
 ```
  {
   "_id": "5e5105023443980914d76c09",
-  "name": "Рагнар Лодброк",
-  "about": "Король",
-  "avatar": "avatar.com/ragnar.jpg",
-  "email": "ragnar@gmail.com"
+  "email": "admin@gmail.com",
+  "name": "Admin",
   }
 ```
 
@@ -113,27 +107,53 @@ password - пароль, string.
 
 ```
 {
-  "email": "ragnar@gmail.com"
+  "email": "admin@gmail.com",
   "password": "p2As&dww0rd"
 }
 ```
 
-- Пример ответа:
+- Пример тела ответа:
 
 ```
 {
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
+    "message": "Авторизация прошла успешно"
 }
 ```
 
-### `/users`
-
-- Описание: Получение списка пользователей.
-- Метод: `GET`;
-- Headers:
+- Пример `Cookies`
 
 ```
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
+jwt=eyJhbGciOi.....GhIXiC0yGI7u-nfRs; path=/; domain=localhost; HttpOnly; Expires=Wed, 25 Mar 2020 14:08:51 GMT;
+```
+
+### `/users/me`
+
+- Описание: Получение данных о пользователе
+- Метод: `GET`;
+- Cookies:
+
+```
+jwt=eyJhbGciOi.....GhIXiC0yGI7u-nfRs; path=/; domain=localhost; HttpOnly; Expires=Wed, 25 Mar 2020 14:08:51 GMT;  //Пример токена авторизации
+```
+
+- Пример тела ответа:
+
+```
+ {
+  "_id": "5e724b582c803e14518a03f0",
+  "email": "admin@gmail.com",
+  "name": "Admin"
+}
+```
+
+### `/articles`
+
+- Описание: Получение списка статей сохраненных пользователем.
+- Метод: `GET`;
+- Cookies:
+
+```
+jwt=eyJhbGciOi.....GhIXiC0yGI7u-nfRs; path=/; domain=localhost; HttpOnly; Expires=Wed, 25 Mar 2020 14:08:51 GMT;  //Пример токена авторизации
 ```
 
 - Пример ответа:
@@ -142,280 +162,100 @@ Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена автор
 {
   "data": [
     {
-        "_id": "5e43f910b70cfe185c99defd",
-        "name": "Ивар Логдброк",
-        "about": "Сын",
-        "avatar": "avatar.com/ivar.jpg",
-        "email": "ivar@gmail.com"
+      "_id": "5e724d372c803e14518a03f1",
+      "keyword": "world",
+      "title": "Coronavirus: UK and US stocks dive despite stimulus plans",
+      "text": "The Dow led the declines in the US, falling more than 4%, while the S&P 500 and Nasdaq dropped more than 3%. The FTSE 100 index of top UK firms fell more than 3%, with aerospace, travel and housing firm among the hardest hit.",
+      "date": "12.01.2020",
+      "source": "BBC",
+      "link": "https://bbc.al",
+      "image": "https://bbc.al"
     },
 
-    .......................
+    ........................
 
-    .......................
+    ........................
 
     {
-      "_id": "5e5105023443980914d76c09",
-      "name": "Рагнар Лодброк",
-      "about": "Король",
-      "avatar": "avatar.com/ragnar.jpg",
-      "email": "ragnar@gmail.com"
+      "_id": "5e724d3a2c803e14518a03f2",
+      "keyword": "world",
+      "title": "EU warns of Kremlin disinformation efforts to sow 'panic and fear' during coronavirus outbreak",
+      "date": "12.01.2020",
+      "source": "CNN",
+      "link": "https://cnn.al",
+      "image": "https://cnn.al",
+      "text": "(CNN)Russian state media and pro-Kremlin outlets have deployed a disinformation campaign to sow "panic and fear" in the West amid the coronavirus outbreak, European Union (EU) officials warned in an internal report seen by CNN."
     }
   ]
 }
 ```
 
-### `/users/:iserId`
-
-- Описание: Получить пользователя по id. Здесь `userId` - уникальный `_id` присвоенный каждому пользователю.
-- Метод: `GET`;
-- Headers:
-
-```
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
-```
-
-- Пример ответа:
-
-```
-    {
-      "_id": "5e43f910b70cfe185c99defd",
-      "name": "Ивар Логдброк",
-      "about": "Сын",
-      "avatar": "avatar.com/ivar.jpg",
-      "email": "ivar@gmail.com"
-    }
-```
-
-### `/users/me`
-
-- Описание: Обновление данных пользователя, а именно имя и инормацию о пользователе.
-- Метод: `PATCH`;
-- Headers:
-
-```
-Content-Type: application/json
-
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
-```
-
-- Параметры:
-
-```
-  name - имя пользователя, string;
-  about - информация о пользователе, string;
-```
-
-- Пример тела запроса:
-
-```
-{
-  "name": "Бьёрн";
-  "about": Старшый сын;
-}
-```
-
-- Пример ответа:
-
-```
-  {
-    "_id": "5e43f910b70cfe185c99defd",
-    "name": "Бьёрн",
-    "about": "Старшый сын",
-    "avatar": "avatar.com/ivar.jpg",
-    "email": "ivar@gmail.com"
-  }
-```
-
-### `/users/me/avatar`
-
-- Описание: Обновление аватар пользователя.
-- Метод: `PATCH`;
-- Headers:
-
-```
-Content-Type: application/json
-
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
-```
-
-- Параметры:
-
-```
-avatar - ссылка на автар пользователя, string;
-```
-
-- Пример тела запроса:
-
-```
-{
-    "avatar": "avatar.com/byorn.jpg",
-}
-```
-
-- Пример ответа:
-
-```
-  {
-    "_id": "5e43f910b70cfe185c99defd",
-    "name": "Бьёрн",
-    "about": "Старшый сын",
-    "avatar": "avatar.com/byorn.jpg",
-    "email": "ivar@gmail.com"
-  }
-```
-
-### `/cards`
-
-- Описание: Получение списка карточек.
-- Метод: `GET`;
-- Headers:
-
-```
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
-```
-
-- Пример ответа:
-
-```
-{
-    "data": [
-        {
-            "likes": [],
-            "_id": "5e45434d76daf744c05214f5",
-            "name": "Test card 1",
-            "link": "cardr.com/card1.jpg",
-            "owner": "5e4420b893964a116479cacc",
-            "createdAt": "2020-02-13T12:38:37.478Z"
-        },
-
-        ..................
-
-        ..................
-
-        {
-            "likes": [],
-            "_id": "5e4d395b2982ee11d8425733",
-            "name": "Test card 99",
-            "link": "cardr.com/card99.jpg",
-            "owner": "5e4d37f34a5e6d35647cb6d3",
-            "createdAt": "2020-02-19T13:34:19.222Z"
-        }
-    ]
-}
-```
-
-### `/cards`
+### `/articles`
 
 - Описание: Создания пользователя на сервере.
 - Метод: `POST`;
-- Headers:
+- Cookies:
 
 ```
-Content-Type: application/json
-
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
+jwt=eyJhbGciOi.....GhIXiC0yGI7u-nfRs; path=/; domain=localhost; HttpOnly; Expires=Wed, 25 Mar 2020 14:08:51 GMT;  //Пример токена авторизации
 ```
 
 - Параметры:
 
 ```
-name - имя карточки, string;
-link - ссылка на карточку, string.
+keyword - ключевые слова статьи, string;
+title - заголовок статьи, string;
+date - дата создания статьи, string;
+source - ресурс опубликовавший статью, string;
+link - ссылка на статью, string;
+image - главное изображение статьи, string;
+text - текст статьи, string.
 ```
 
 - Пример тела запроса:
 
 ```
 {
-  "name": "Card 100",
-  "link": "cards.com/card100"
+	"keyword": "world",
+	"title": "EU warns of Kremlin disinformation efforts to sow 'panic and fear' during coronavirus outbreak",
+	"date": "12.01.2020",
+	"source": "CNN",
+	"link": "https://cnn.al",
+	"image": "https://cnn.al",
+	"text": "(CNN)Russian state media and pro-Kremlin outlets have deployed a disinformation campaign to sow "panic and fear" in the West amid the coronavirus outbreak, European Union (EU) officials warned in an internal report seen by CNN."
 }
 ```
 
-- Пример ответа:
+- Пример тела ответа:
 
 ```
-    {
-      "likes": [], // Массив с лайкнувшими пользователями
-      "_id": "5e513f3e40276d2fac54e47a",
-      "name": "Card 100",
-      "link": "cards.com/card100",
-      "owner": "5e4d37f34a5e6d35647cb6d3",  // Владелец карточки
-      "createdAt": "2020-02-22T14:48:30.203Z" // Дата создания
-    }
+{
+  "_id": "5e724f592c803e14518a03f4",
+	"keyword": "world",
+	"title": "EU warns of Kremlin disinformation efforts to sow 'panic and fear' during coronavirus outbreak",
+	"date": "12.01.2020",
+	"source": "CNN",
+	"link": "https://cnn.al",
+	"image": "https://cnn.al",
+	"text": "(CNN)Russian state media and pro-Kremlin outlets have deployed a disinformation campaign to sow "panic and fear" in the West amid the coronavirus outbreak, European Union (EU) officials warned in an internal report seen by CNN."
+}
 
 ```
 
-### `/cards/:cardId`
+### `/article/:articleId`
 
-- Описание: Удаляет карточку из базы данных.
+- Описание: Удаляет статью из базы данных.
 - Метод: `DELETE`;
-- Headers:
+- Cookies:
 
 ```
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
+jwt=eyJhbGciOi.....GhIXiC0yGI7u-nfRs; path=/; domain=localhost; HttpOnly; Expires=Wed, 25 Mar 2020 14:08:51 GMT;  //Пример токена авторизации
 ```
 
 - Пример ответа:
 
 ```
   {
-    "message": "Пост успешно удален!"
+    "message": "Статья успешно удалена!"
   }
-```
-
-### `/cards/:cardId/likes`
-
-- Описание: Лайк карточки.
-- Метод: `PUT`;
-- Headers:
-
-```
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
-```
-
-- Пример ответа:
-
-```
-    {
-      "likes": [
-          "5e4d37f34a5e6d3564dvs8vd"
-          "5e4d37f347feg735647cfgd9"
-          "5e4d37f34a5e6d35647cb6d3"  // _id авторизированного пользователя, который лайкунл карточку
-      ],
-      "_id": "5e5142be16bf5323d0c875c7",
-      "name": "Card 100",
-      "link": "cards.com/card100",
-      "owner": "5e4d37f34a5e6d35647cb6d3",
-      "createdAt": "2020-02-22T15:03:26.180Z"
-    }
-
-```
-
-### `/cards/:cardId/likes`
-
-- Описание: Удаление лайка с карточки.
-- Метод: `DELETE`;
-- Headers:
-
-```
-Authorization: Bearer eyJhbG...Td3LIqXAw  //Пример токена авторизации
-```
-
-- Пример ответа:
-
-```
-    {
-      "likes": [
-          "5e4d37f34a5e6d3564dvs8vd"
-          "5e4d37f347feg735647cfgd9"
-          // Из массива удален _id пользователя
-      ],
-      "_id": "5e5142be16bf5323d0c875c7",
-      "name": "Card 100",
-      "link": "cards.com/card100",
-      "owner": "5e4d37f34a5e6d35647cb6d3",
-      "createdAt": "2020-02-22T15:03:26.180Z"
-    }
-
 ```
