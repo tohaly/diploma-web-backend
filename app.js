@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const dbStatusMessages = require('./config/db-status-messages');
 const serverStatusMessage = require('./config/server-status-message');
@@ -19,6 +20,11 @@ const { PORT, MONGO_HOST } = process.env;
 
 const app = express();
 
+const corsOptions = {
+  credentials: true, // This is important.
+  origin: 'http://localhost:8080'
+};
+app.use(cors(corsOptions));
 app.use(helmet());
 
 app.use(bodyParser.json());
