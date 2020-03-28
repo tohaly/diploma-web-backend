@@ -13,7 +13,7 @@ const {
   TO_LONG
 } = require('../config/constants/response-messages/validation-errors');
 const { AUTHENTICATION } = require('../config/constants/response-messages/client-errors');
-const { RequestWrong } = require('../errors');
+const { ForbiddenError } = require('../errors');
 const { getResponse } = require('../libs/helpers');
 
 const UserSchema = new mongoose.Schema(
@@ -47,18 +47,18 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.plugin(uniqueValidator, new RequestWrong(MAIL_ALREADY_EXISTS));
+UserSchema.plugin(uniqueValidator, new ForbiddenError(MAIL_ALREADY_EXISTS));
 
 UserSchema.statics.findUserByCredentials = function(email, password) {
   return this.findOne({ email })
     .select('+password')
     .then(user => {
       if (!user) {
-        return Promise.reject(new RequestWrong(AUTHENTICATION));
+        return Promise.reject(new ForbiddenError(AUTHENTICATION));
       }
       return bcrypt.compare(password, user.password).then(matched => {
         if (!matched) {
-          return Promise.reject(new RequestWrong(AUTHENTICATION));
+          return Promise.reject(new ForbiddenError(AUTHENTICATION));
         }
         return user;
       });
