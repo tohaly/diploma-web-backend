@@ -16,11 +16,16 @@ const { validateCreateUser, validateLogin } = require('./modules/celebrate-valid
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./modules/reate-limiter-confg');
 
-const { PORT, MONGO_HOST, CORS_OPTIONS } = process.env;
+const { PORT, MONGO_HOST } = process.env;
 
 const app = express();
 
-app.use(cors(JSON.parse(CORS_OPTIONS)));
+app.use(
+  cors({
+    credentials: true,
+    origin: true
+  })
+);
 app.use(helmet());
 
 app.use(bodyParser.json());
