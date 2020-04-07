@@ -20,12 +20,14 @@ module.exports.login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then(user => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const { name } = user;
+
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true
       });
-      res.status(200).send({ message: AUTHORIZATION });
+      res.status(200).send({ name, email });
     })
     .catch(next);
 };
