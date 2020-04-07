@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const dbStatusMessages = require('./config/db-status-messages');
 const serverStatusMessage = require('./config/server-status-message');
@@ -15,10 +16,11 @@ const { validateCreateUser, validateLogin } = require('./modules/celebrate-valid
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./modules/reate-limiter-confg');
 
-const { PORT, MONGO_HOST } = process.env;
+const { PORT, MONGO_HOST, CORS_OPTIONS } = process.env;
 
 const app = express();
 
+app.use(cors(JSON.parse(CORS_OPTIONS)));
 app.use(helmet());
 
 app.use(bodyParser.json());
