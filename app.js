@@ -16,11 +16,22 @@ const { validateCreateUser, validateLogin } = require('./modules/celebrate-valid
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./modules/reate-limiter-confg');
 
-const { PORT, MONGO_HOST, CORS_OPTIONS } = process.env;
+const { PORT, MONGO_HOST } = process.env;
 
 const app = express();
 
-app.use(cors(JSON.parse(CORS_OPTIONS)));
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      'http://diploma-web.ml',
+      'https://diploma-web.ml',
+      'http://wwww.diploma-web.ml',
+      'https://www.diploma-web.ml',
+      'https://tohaly.github.io'
+    ]
+  })
+);
 app.use(helmet());
 
 app.use(bodyParser.json());
