@@ -23,7 +23,13 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: true
+    origin: [
+      'http://diploma-web.ml',
+      'https://diploma-web.ml',
+      'http://wwww.diploma-web.ml',
+      'https://www.diploma-web.ml',
+      'https://tohaly.github.io'
+    ]
   })
 );
 app.use(helmet());
